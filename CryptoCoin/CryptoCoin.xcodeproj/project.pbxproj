@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		336F9FEC2BABF29000DF4A3A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336F9FEB2BABF29000DF4A3A /* Color.swift */; };
 		33AABC822BABE8CF00CE1BE0 /* CryptoCoinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AABC812BABE8CF00CE1BE0 /* CryptoCoinApp.swift */; };
 		33AABC842BABE8CF00CE1BE0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AABC832BABE8CF00CE1BE0 /* ContentView.swift */; };
-		33AABC862BABE8D500CE1BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AABC852BABE8D500CE1BE0 /* Assets.xcassets */; };
 		33AABC892BABE8D500CE1BE0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AABC882BABE8D500CE1BE0 /* Preview Assets.xcassets */; };
 		33AABC932BABE8D600CE1BE0 /* CryptoCoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AABC922BABE8D600CE1BE0 /* CryptoCoinTests.swift */; };
 		33AABC9D2BABE8D600CE1BE0 /* CryptoCoinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AABC9C2BABE8D600CE1BE0 /* CryptoCoinUITests.swift */; };
 		33AABC9F2BABE8D600CE1BE0 /* CryptoCoinUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AABC9E2BABE8D600CE1BE0 /* CryptoCoinUITestsLaunchTests.swift */; };
+		33AABCAC2BABEDC200CE1BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AABCAB2BABEDC200CE1BE0 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,16 +35,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		336F9FEB2BABF29000DF4A3A /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		33AABC7E2BABE8CF00CE1BE0 /* CryptoCoin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoCoin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AABC812BABE8CF00CE1BE0 /* CryptoCoinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinApp.swift; sourceTree = "<group>"; };
 		33AABC832BABE8CF00CE1BE0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		33AABC852BABE8D500CE1BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33AABC882BABE8D500CE1BE0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		33AABC8E2BABE8D600CE1BE0 /* CryptoCoinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoCoinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AABC922BABE8D600CE1BE0 /* CryptoCoinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinTests.swift; sourceTree = "<group>"; };
 		33AABC982BABE8D600CE1BE0 /* CryptoCoinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoCoinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AABC9C2BABE8D600CE1BE0 /* CryptoCoinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinUITests.swift; sourceTree = "<group>"; };
 		33AABC9E2BABE8D600CE1BE0 /* CryptoCoinUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		33AABCAB2BABEDC200CE1BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../../Downloads/Resources/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		336F9FEA2BABF27200DF4A3A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				336F9FEB2BABF29000DF4A3A /* Color.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		33AABC752BABE8CF00CE1BE0 = {
 			isa = PBXGroup;
 			children = (
@@ -96,7 +106,8 @@
 			children = (
 				33AABC812BABE8CF00CE1BE0 /* CryptoCoinApp.swift */,
 				33AABC832BABE8CF00CE1BE0 /* ContentView.swift */,
-				33AABC852BABE8D500CE1BE0 /* Assets.xcassets */,
+				336F9FEA2BABF27200DF4A3A /* Extension */,
+				33AABCAB2BABEDC200CE1BE0 /* Assets.xcassets */,
 				33AABC872BABE8D500CE1BE0 /* Preview Content */,
 			);
 			path = CryptoCoin;
@@ -232,7 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33AABC892BABE8D500CE1BE0 /* Preview Assets.xcassets in Resources */,
-				33AABC862BABE8D500CE1BE0 /* Assets.xcassets in Resources */,
+				33AABCAC2BABEDC200CE1BE0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +270,7 @@
 			files = (
 				33AABC842BABE8CF00CE1BE0 /* ContentView.swift in Sources */,
 				33AABC822BABE8CF00CE1BE0 /* CryptoCoinApp.swift in Sources */,
+				336F9FEC2BABF29000DF4A3A /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,11 +431,12 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CryptoCoin/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Crypto Coin";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -447,11 +460,12 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CryptoCoin/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Crypto Coin";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
