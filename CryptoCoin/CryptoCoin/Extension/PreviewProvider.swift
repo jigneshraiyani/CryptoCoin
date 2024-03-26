@@ -19,6 +19,8 @@ class DeveloperPreview {
     static let shareInstance = DeveloperPreview()
     private init () {}
     
+    let dashboardvm = DashBoardViewModel()
+    
     let coin = Coin(
         id: "bitcoin",
         symbol: "btc",

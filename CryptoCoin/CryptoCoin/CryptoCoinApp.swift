@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct CryptoCoinApp: App {
+    @StateObject private var dashboardvm = DashBoardViewModel()
+    
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 DashBoardView()
                     .navigationBarHidden(true)
-            }
+            }.environmentObject(dashboardvm)
         }
     }
 }

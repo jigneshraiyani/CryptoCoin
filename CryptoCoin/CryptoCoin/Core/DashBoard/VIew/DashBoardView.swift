@@ -14,7 +14,12 @@ struct DashBoardView: View {
     let priceTitle = "Live Prices"
     let portfolioTitle = "Portfolio"
     
+    let barTitle = "Coin"
+    let barHolding = "Holding"
+    let barPrice = "Price"
+    
     @State private var showPortfolio: Bool = false
+    @EnvironmentObject private var dashboardv : DashBoardViewModel
     
     var body: some View {
         ZStack {
@@ -22,6 +27,15 @@ struct DashBoardView: View {
                 .ignoresSafeArea(.all)
             VStack {
                 dashBoardheader
+                columnsTitles
+                if showPortfolio == false {
+                    allCoinList
+                    .transition(.move(edge: .leading))
+                }
+                if showPortfolio == true {
+                    portfolioCoinList
+                    .transition(.move(edge: .trailing))
+                }
                 Spacer(minLength: 0)
             }
         }
@@ -34,11 +48,12 @@ struct DashBoardView_Previews: PreviewProvider {
             DashBoardView()
                 .navigationBarHidden(true)
         }
+        .environmentObject(DeveloperPreview.shareInstance.dashboardvm)
     }
 }
 
 extension DashBoardView {
-    var dashBoardheader: some View {
+    private var dashBoardheader: some View {
         HStack {
             CircleButton(iconName: showPortfolio ? plusIcon : infoIcon)
                 .animation(.none)
@@ -60,6 +75,50 @@ extension DashBoardView {
                     }
                 }
         }
+        .padding(.horizontal)
+    }
+    
+    private var allCoinList: some View {
+        List {
+            ForEach(dashboardv.allCoined) { coin in
+                CoinRowView(coin: coin,
+                            showHoldingColumn: false)
+                    .listRowInsets(.init(top: 10,
+                                         leading: 0,
+                                         bottom: 0,
+                                         trailing: 10))
+            }
+        }
+        .listStyle(.plain)
+    }
+    
+    private var portfolioCoinList: some View {
+        List {
+            ForEach(dashboardv.portfolioCoins) { coin in
+                CoinRowView(coin: coin,
+                            showHoldingColumn: true)
+                    .listRowInsets(.init(top: 10,
+                                         leading: 0,
+                                         bottom: 0,
+                                         trailing: 10))
+            }
+        }
+        .listStyle(.plain)
+    }
+    
+    private var columnsTitles: some View {
+        HStack {
+            Text(barTitle)
+            Spacer()
+            if showPortfolio == true {
+                Text(barHolding)
+            }
+            Text(barPrice)
+                .frame(width: UIScreen.main.bounds.width/3.5,
+                       alignment: .trailing)
+        }
+        .font(.caption)
+        .foregroundColor(Color.theme.accentColor)
         .padding(.horizontal)
     }
 }
