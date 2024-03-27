@@ -104,8 +104,8 @@
 		3321A4572BAC0B130079D357 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				3321A4582BAC0DAE0079D357 /* CircleButton.swift */,
-				3321A45A2BAC3AF00079D357 /* CircleButtonAnimation.swift */,
+				33D4BAA32BB43AA200F4A29C /* CircleButton */,
+				33400C7A2BB3B83400EBE9AE /* CoinImage */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -165,7 +165,6 @@
 		336F9FED2BAC04DB00DF4A3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				33400C7A2BB3B83400EBE9AE /* CoinImage */,
 				3321A4572BAC0B130079D357 /* Components */,
 				336F9FEE2BAC04E400DF4A3A /* DashBoard */,
 			);
@@ -258,6 +257,15 @@
 				33AABC9E2BABE8D600CE1BE0 /* CryptoCoinUITestsLaunchTests.swift */,
 			);
 			path = CryptoCoinUITests;
+			sourceTree = "<group>";
+		};
+		33D4BAA32BB43AA200F4A29C /* CircleButton */ = {
+			isa = PBXGroup;
+			children = (
+				3321A45A2BAC3AF00079D357 /* CircleButtonAnimation.swift */,
+				3321A4582BAC0DAE0079D357 /* CircleButton.swift */,
+			);
+			path = CircleButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
