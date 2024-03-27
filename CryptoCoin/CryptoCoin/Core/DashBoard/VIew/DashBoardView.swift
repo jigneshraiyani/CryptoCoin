@@ -27,6 +27,7 @@ struct DashBoardView: View {
                 .ignoresSafeArea(.all)
             VStack {
                 dashBoardheader
+                SearchBarView(searchText: $dashboardv.searchBarText)
                 columnsTitles
                 if showPortfolio == false {
                     allCoinList
