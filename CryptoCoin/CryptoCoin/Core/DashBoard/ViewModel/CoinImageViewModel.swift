@@ -12,7 +12,7 @@ import Combine
 class CoinImageViewModel: ObservableObject {
     
     @Published var image: UIImage? = nil
-    @Published var isLoading: Bool = true
+    @Published var isLoading: Bool = false
     
     private let coin: Coin
     private let coinImageService: CoinImageService
@@ -20,7 +20,7 @@ class CoinImageViewModel: ObservableObject {
     
     init(coin: Coin) {
         self.coin = coin
-        self.coinImageService = CoinImageService(imageURL: coin.image)
+        self.coinImageService = CoinImageService(coin: coin)
         self.isLoading = true
         self.addSubscribe()
     }

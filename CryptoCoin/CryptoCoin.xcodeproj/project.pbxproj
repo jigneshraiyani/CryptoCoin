@@ -28,6 +28,7 @@
 		33AABC9F2BABE8D600CE1BE0 /* CryptoCoinUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AABC9E2BABE8D600CE1BE0 /* CryptoCoinUITestsLaunchTests.swift */; };
 		33AABCAC2BABEDC200CE1BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AABCAB2BABEDC200CE1BE0 /* Assets.xcassets */; };
 		33D4BAA02BB3C15B00F4A29C /* CoinImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D4BA9F2BB3C15B00F4A29C /* CoinImageService.swift */; };
+		33D4BAA22BB3E06700F4A29C /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D4BAA12BB3E06700F4A29C /* LocalFileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		33AABC9E2BABE8D600CE1BE0 /* CryptoCoinUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoinUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		33AABCAB2BABEDC200CE1BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../../Downloads/Resources/Assets.xcassets; sourceTree = "<group>"; };
 		33D4BA9F2BB3C15B00F4A29C /* CoinImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageService.swift; sourceTree = "<group>"; };
+		33D4BAA12BB3E06700F4A29C /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				33400C782BB2902200EBE9AE /* NetworkManager.swift */,
+				33D4BAA12BB3E06700F4A29C /* LocalFileManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				33400C752BB27B7900EBE9AE /* CoinDataService.swift in Sources */,
 				3321A4602BAC5BDF0079D357 /* CoinRowView.swift in Sources */,
 				33400C722BB1F6D600EBE9AE /* DashBoardViewModel.swift in Sources */,
+				33D4BAA22BB3E06700F4A29C /* LocalFileManager.swift in Sources */,
 				33400C792BB2902200EBE9AE /* NetworkManager.swift in Sources */,
 				3321A4592BAC0DAE0079D357 /* CircleButton.swift in Sources */,
 				33400C7C2BB3B84900EBE9AE /* CoinImageView.swift in Sources */,
