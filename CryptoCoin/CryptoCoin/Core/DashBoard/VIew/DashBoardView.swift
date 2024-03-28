@@ -27,6 +27,7 @@ struct DashBoardView: View {
                 .ignoresSafeArea(.all)
             VStack {
                 dashBoardheader
+                DashBoardStatisticView(showPortfolio: $showPortfolio)
                 SearchBarView(searchText: $dashboardv.searchBarText)
                 columnsTitles
                 if showPortfolio == false {

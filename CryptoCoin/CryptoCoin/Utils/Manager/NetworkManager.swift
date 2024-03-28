@@ -35,6 +35,7 @@ class NetworkManager {
               response.statusCode >= 200 && response.statusCode < 300 else  {
             throw NetworkError.badURLResponse(url: url)
         }
+        print("market data 1= \(output.data) for url = \(url)")
         return output.data
     }
     
