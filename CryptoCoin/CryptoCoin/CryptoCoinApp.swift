@@ -11,6 +11,11 @@ import SwiftUI
 struct CryptoCoinApp: App {
     @StateObject private var dashboardvm = DashBoardViewModel()
     
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor(Color.theme.accentColor)]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor(Color.theme.accentColor)]
+    }
+    
     var body: some Scene {
         WindowGroup {
             NavigationView {
