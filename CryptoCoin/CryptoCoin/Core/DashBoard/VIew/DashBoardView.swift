@@ -19,12 +19,17 @@ struct DashBoardView: View {
     let barPrice = "Price"
     
     @State private var showPortfolio: Bool = false
+    @State private var showPortfolioView: Bool = false
     @EnvironmentObject private var dashboardv : DashBoardViewModel
     
     var body: some View {
         ZStack {
             Color.theme.backgroundColor
                 .ignoresSafeArea(.all)
+                .sheet(isPresented: $showPortfolioView) {
+                    PortfolioView()
+                        .environmentObject(dashboardv)
+                }
             VStack {
                 dashBoardheader
                 DashBoardStatisticView(showPortfolio: $showPortfolio)
@@ -62,6 +67,9 @@ extension DashBoardView {
                 .background(
                     CircleButtonAnimation(animation: $showPortfolio)
                 )
+                .onTapGesture {
+                    showPortfolioView.toggle()
+                }
             Spacer()
             Text(showPortfolio ? portfolioTitle : priceTitle)
                 .font(.headline)
