@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class DashBoardViewModel: ObservableObject {
-    @Published var allCoined: [Coin] = []
+    @Published var allCoins: [Coin] = []
     @Published var portfolioCoins: [Coin] = []
     @Published var searchBarText: String = ""
     
@@ -17,9 +17,9 @@ class DashBoardViewModel: ObservableObject {
     
     private var cancellables =  Set<AnyCancellable>()
     
-    let coinService = CoinDataService()
-    let marketDataService = MarketDataService()
-    
+    private let coinService = CoinDataService()
+    private let marketDataService = MarketDataService()
+    private let portfolioDataServie = PortfolioDataService()
     init (){
         addSubscribe()
     }
@@ -30,15 +30,35 @@ class DashBoardViewModel: ObservableObject {
                       scheduler: DispatchQueue.main)
             .map(filterCoins)
             .sink { [weak self] (returnedCoins) in
-                self?.allCoined = returnedCoins
-            }.store(in: &cancellables)
+                self?.allCoins = returnedCoins
+            }
+            .store(in: &cancellables)
         
         marketDataService.$marketData.map(mapGlobalMarketData)
             .sink { [weak self] (receivedStatistic) in
-            self?.statistics = receivedStatistic
-        }
-        .store(in: &cancellables)
-
+                self?.statistics = receivedStatistic
+            }
+            .store(in: &cancellables)
+        
+        $allCoins.combineLatest(portfolioDataServie.$savedEntities)
+            .map { (coins, portfolioEntities) -> [Coin] in
+                coins.compactMap { (coin) -> Coin? in
+                    guard let entity = portfolioEntities.first(where: { $0.coinID == coin.id }) else {
+                        return nil
+                    }
+                    return coin.updateHolding(amount: entity.amount)
+                }
+            }
+            .sink { [weak self] (receivedCoins) in
+                self?.portfolioCoins = receivedCoins
+            }
+            .store(in: &cancellables)
+    }
+    
+    func updatePortfolio(coin: Coin,
+                         amount: Double) {
+        portfolioDataServie.updatePortfolio(coin: coin,
+                                            amount: amount)
     }
     
     func filterCoins(searchText: String, startingCoins: [Coin]) -> [Coin] {

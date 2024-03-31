@@ -38,6 +38,11 @@ struct PortfolioView: View {
                     trailingNavBarButton
                 }
             })
+            .onChange(of: dashboardvm.searchBarText) { newValue in
+                if newValue == "" {
+                    removeSelectedCoin()
+                }
+            }
         }
     }
 }
@@ -63,13 +68,14 @@ extension PortfolioView {
         ScrollView(.horizontal,
                    showsIndicators: false) {
             LazyHStack {
-                ForEach(dashboardvm.allCoined) { coin in
+                ForEach(dashboardvm.searchBarText.isEmpty ?
+                        dashboardvm.portfolioCoins : dashboardvm.allCoins) { coin in
                     CoinView(coin: coin)
                         .frame(width: 75)
                         .padding(5)
                         .onTapGesture {
                             withAnimation(.easeIn) {
-                                selectedCoin = coin
+                                updateSelectedCoins(coin: coin)
                             }
                         }
                         .background (
@@ -82,6 +88,17 @@ extension PortfolioView {
             }
             .padding(.vertical, 10)
             .padding(.leading)
+        }
+    }
+    
+    private func updateSelectedCoins(coin: Coin) {
+        selectedCoin = coin
+        
+        if let portfolioCoin = dashboardvm.portfolioCoins.first(where: { $0.id == coin.id }),
+           let amount = portfolioCoin.currentHoldings {
+            quantityText = "\(amount)"
+        } else {
+            quantityText = ""
         }
     }
     
@@ -135,13 +152,18 @@ extension PortfolioView {
     }
     
     private func saveButtonPressed() {
-        guard let coin = selectedCoin else { return }
+        guard let coin = selectedCoin,
+              let amount = Double(quantityText) else { return }
         
         // Show checkmark
         withAnimation(.easeIn) {
             showCheckmark = true
             removeSelectedCoin()
         }
+        
+        // Save to Portfolio
+        dashboardvm.updatePortfolio(coin: coin,
+                                    amount: amount)
         
         // Hide keyboard
         UIApplication.shared.endEditing()
