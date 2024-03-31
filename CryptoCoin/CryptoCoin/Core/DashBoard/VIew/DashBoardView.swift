@@ -11,6 +11,8 @@ struct DashBoardView: View {
     let infoIcon = "info"
     let plusIcon = "plus"
     let chevIcon = "chevron.right"
+    let chevDownIcon = "chevron.down"
+    let goforwardIcon = "goforward"
     let priceTitle = "Live Prices"
     let portfolioTitle = "Portfolio"
     
@@ -118,20 +120,53 @@ extension DashBoardView {
     
     private var columnsTitles: some View {
         HStack {
-            Text(barTitle)
+            HStack {
+                Text(barTitle)
+                Image(systemName: chevDownIcon)
+                    .opacity((dashboardv.sortingOption == .rank || dashboardv.sortingOption == .rankReversed) ? 1.0 : 0.0)
+                    .rotationEffect(Angle(degrees: dashboardv.sortingOption == .rank ? 0 : 180 ))
+            }
+            .onTapGesture {
+                withAnimation(.default) {
+                    dashboardv.sortingOption =
+                    dashboardv.sortingOption == .rank ? .rankReversed : .rank
+                }
+            }
             Spacer()
             if showPortfolio == true {
-                Text(barHolding)
+                HStack {
+                    Text(barHolding)
+                    Image(systemName: chevDownIcon)
+                        .opacity((dashboardv.sortingOption == .holding || dashboardv.sortingOption == .holdingReversed) ? 1.0 : 0.0)
+                        .rotationEffect(Angle(degrees: dashboardv.sortingOption == .holding ? 0 : 180 ))
+                }
+                .onTapGesture {
+                    withAnimation(.default) {
+                        dashboardv.sortingOption =
+                        dashboardv.sortingOption == .holding ? .holdingReversed : .holding
+                    }
+                }
             }
-            Text(barPrice)
-                .frame(width: UIScreen.main.bounds.width/3.5,
+            HStack {
+                Text(barPrice)
+                Image(systemName: chevDownIcon)
+                    .opacity((dashboardv.sortingOption == .price || dashboardv.sortingOption == .priceReversed) ? 1.0 : 0.0)
+                    .rotationEffect(Angle(degrees: dashboardv.sortingOption == .price ? 0 : 180 ))
+            }
+            .frame(width: UIScreen.main.bounds.width/3.5,
                        alignment: .trailing)
+            .onTapGesture {
+                withAnimation(.default) {
+                    dashboardv.sortingOption =
+                    dashboardv.sortingOption == .price ? .priceReversed : .price
+                }
+            }
             Button {
                 withAnimation(.linear(duration: 2.0)) {
                     dashboardv.reloadData()
                 }
             } label: {
-                Image(systemName: "goforward")
+                Image(systemName: goforwardIcon)
             }
             .rotationEffect(Angle(degrees: dashboardv.isLoading ? 360 : 0),
                             anchor: .center)
