@@ -14,6 +14,11 @@ class DashBoardViewModel: ObservableObject {
     @Published var searchBarText: String = ""
     @Published var isLoading: Bool = false
     @Published var statistics: [Statistic] = []
+    @Published var sortingOption: SortOption = .holding
+    
+    enum SortOption {
+        case rank, rankReversed, price, priceReversed, holding, holdingReversed
+    }
     
     private var cancellables =  Set<AnyCancellable>()
     
@@ -25,10 +30,11 @@ class DashBoardViewModel: ObservableObject {
     }
     
     func addSubscribe() {
-        $searchBarText.combineLatest(coinService.$allCoins)
+        $searchBarText.combineLatest(coinService.$allCoins,
+                                     $sortingOption)
             .debounce(for: .seconds(0.5),
                       scheduler: DispatchQueue.main)
-            .map(filterCoins)
+            .map(filterAndSortCoins)
             .sink { [weak self] (returnedCoins) in
                 self?.allCoins = returnedCoins
             }
@@ -38,7 +44,8 @@ class DashBoardViewModel: ObservableObject {
             .combineLatest(portfolioDataServie.$savedEntities)
             .map(mapAllCoinsToPortfolioCoins)
             .sink { [weak self] (receivedCoins) in
-                self?.portfolioCoins = receivedCoins
+                guard let self = self else { return }
+                self.portfolioCoins = self.sortPortfolioCoinIfNeeded(coins: receivedCoins)
             }
             .store(in: &cancellables)
         
@@ -65,7 +72,18 @@ class DashBoardViewModel: ObservableObject {
         HapticManager.notification(type: .success)
     }
     
-    func filterCoins(searchText: String, startingCoins: [Coin]) -> [Coin] {
+    func filterAndSortCoins(searchText: String,
+                            startingCoins: [Coin],
+                            sort: SortOption) -> [Coin] {
+        var filterCoins = filterCoins(searchText: searchText,
+                                      startingCoins: startingCoins)
+        sortCoins(sort: sort,
+                  coin: &filterCoins)
+        return filterCoins
+    }
+    
+    private func filterCoins(searchText: String,
+                     startingCoins: [Coin]) -> [Coin] {
         guard !searchText.isEmpty else {
             return startingCoins
         }
@@ -75,6 +93,31 @@ class DashBoardViewModel: ObservableObject {
             return coin.name.lowercased().contains(loweredText) ||
             coin.symbol.lowercased().contains(loweredText) ||
             coin.id.lowercased().contains(loweredText)
+        }
+    }
+    
+    private func sortCoins(sort: SortOption,
+                           coin: inout [Coin]) {
+        switch sort {
+        case .rank, .holding:
+             coin.sort(by: { $0.rank < $1.rank })
+        case .rankReversed, .holdingReversed:
+             coin.sort(by: { $0.rank > $1.rank })
+        case .price:
+             coin.sort(by: { $0.currentPrice > $1.currentPrice })
+        case .priceReversed:
+             coin.sort(by: { $0.currentPrice < $1.currentPrice })
+        }
+    }
+    
+    private func sortPortfolioCoinIfNeeded(coins: [Coin]) -> [Coin] {
+        switch sortingOption {
+        case .holding:
+            return coins.sorted(by: { $0.currentHoldingsValue > $1.currentHoldingsValue })
+        case .holdingReversed:
+            return coins.sorted(by: { $0.currentHoldingsValue < $1.currentHoldingsValue })
+        default:
+            return coins
         }
     }
     
