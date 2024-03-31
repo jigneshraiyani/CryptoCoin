@@ -90,7 +90,7 @@ extension DashBoardView {
     
     private var allCoinList: some View {
         List {
-            ForEach(dashboardv.allCoined) { coin in
+            ForEach(dashboardv.allCoins) { coin in
                 CoinRowView(coin: coin,
                             showHoldingColumn: false)
                     .listRowInsets(.init(top: 10,
