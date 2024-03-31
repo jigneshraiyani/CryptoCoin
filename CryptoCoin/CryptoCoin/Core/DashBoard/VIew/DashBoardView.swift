@@ -22,6 +22,8 @@ struct DashBoardView: View {
     
     @State private var showPortfolio: Bool = false
     @State private var showPortfolioView: Bool = false
+    @State private var selectedCoin: Coin? = nil
+    @State private var showDetailsView: Bool = false
     @EnvironmentObject private var dashboardv : DashBoardViewModel
     
     var body: some View {
@@ -48,6 +50,11 @@ struct DashBoardView: View {
                 Spacer(minLength: 0)
             }
         }
+        .background(
+            NavigationLink(destination: DetailLoadingView(coin: $selectedCoin),
+                           isActive: $showDetailsView,
+                           label: { EmptyView() })
+        )
     }
 }
 
@@ -99,6 +106,9 @@ extension DashBoardView {
                                          leading: 0,
                                          bottom: 0,
                                          trailing: 10))
+                    .onTapGesture {
+                        navigateToDetailsView(coin: coin)
+                    }
             }
         }
         .listStyle(.plain)
@@ -113,9 +123,17 @@ extension DashBoardView {
                                          leading: 0,
                                          bottom: 0,
                                          trailing: 10))
+                    .onTapGesture {
+                        navigateToDetailsView(coin: coin)
+                    }
             }
         }
         .listStyle(.plain)
+    }
+    
+    private func navigateToDetailsView(coin: Coin) {
+        selectedCoin = coin
+        showDetailsView.toggle()
     }
     
     private var columnsTitles: some View {
