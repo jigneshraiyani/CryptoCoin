@@ -11,6 +11,8 @@ struct DashBoardView: View {
     let infoIcon = "info"
     let plusIcon = "plus"
     let chevIcon = "chevron.right"
+    let chevDownIcon = "chevron.down"
+    let goforwardIcon = "goforward"
     let priceTitle = "Live Prices"
     let portfolioTitle = "Portfolio"
     
@@ -19,14 +21,22 @@ struct DashBoardView: View {
     let barPrice = "Price"
     
     @State private var showPortfolio: Bool = false
+    @State private var showPortfolioView: Bool = false
+    @State private var selectedCoin: Coin? = nil
+    @State private var showDetailsView: Bool = false
     @EnvironmentObject private var dashboardv : DashBoardViewModel
     
     var body: some View {
         ZStack {
             Color.theme.backgroundColor
                 .ignoresSafeArea(.all)
+                .sheet(isPresented: $showPortfolioView) {
+                    PortfolioView()
+                        .environmentObject(dashboardv)
+                }
             VStack {
                 dashBoardheader
+                DashBoardStatisticView(showPortfolio: $showPortfolio)
                 SearchBarView(searchText: $dashboardv.searchBarText)
                 columnsTitles
                 if showPortfolio == false {
@@ -40,6 +50,11 @@ struct DashBoardView: View {
                 Spacer(minLength: 0)
             }
         }
+        .background(
+            NavigationLink(destination: DetailLoadingView(coin: $selectedCoin),
+                           isActive: $showDetailsView,
+                           label: { EmptyView() })
+        )
     }
 }
 
@@ -61,6 +76,9 @@ extension DashBoardView {
                 .background(
                     CircleButtonAnimation(animation: $showPortfolio)
                 )
+                .onTapGesture {
+                    showPortfolioView.toggle()
+                }
             Spacer()
             Text(showPortfolio ? portfolioTitle : priceTitle)
                 .font(.headline)
@@ -81,13 +99,16 @@ extension DashBoardView {
     
     private var allCoinList: some View {
         List {
-            ForEach(dashboardv.allCoined) { coin in
+            ForEach(dashboardv.allCoins) { coin in
                 CoinRowView(coin: coin,
                             showHoldingColumn: false)
                     .listRowInsets(.init(top: 10,
                                          leading: 0,
                                          bottom: 0,
                                          trailing: 10))
+                    .onTapGesture {
+                        navigateToDetailsView(coin: coin)
+                    }
             }
         }
         .listStyle(.plain)
@@ -102,21 +123,72 @@ extension DashBoardView {
                                          leading: 0,
                                          bottom: 0,
                                          trailing: 10))
+                    .onTapGesture {
+                        navigateToDetailsView(coin: coin)
+                    }
             }
         }
         .listStyle(.plain)
     }
     
+    private func navigateToDetailsView(coin: Coin) {
+        selectedCoin = coin
+        showDetailsView.toggle()
+    }
+    
     private var columnsTitles: some View {
         HStack {
-            Text(barTitle)
+            HStack {
+                Text(barTitle)
+                Image(systemName: chevDownIcon)
+                    .opacity((dashboardv.sortingOption == .rank || dashboardv.sortingOption == .rankReversed) ? 1.0 : 0.0)
+                    .rotationEffect(Angle(degrees: dashboardv.sortingOption == .rank ? 0 : 180 ))
+            }
+            .onTapGesture {
+                withAnimation(.default) {
+                    dashboardv.sortingOption =
+                    dashboardv.sortingOption == .rank ? .rankReversed : .rank
+                }
+            }
             Spacer()
             if showPortfolio == true {
-                Text(barHolding)
+                HStack {
+                    Text(barHolding)
+                    Image(systemName: chevDownIcon)
+                        .opacity((dashboardv.sortingOption == .holding || dashboardv.sortingOption == .holdingReversed) ? 1.0 : 0.0)
+                        .rotationEffect(Angle(degrees: dashboardv.sortingOption == .holding ? 0 : 180 ))
+                }
+                .onTapGesture {
+                    withAnimation(.default) {
+                        dashboardv.sortingOption =
+                        dashboardv.sortingOption == .holding ? .holdingReversed : .holding
+                    }
+                }
             }
-            Text(barPrice)
-                .frame(width: UIScreen.main.bounds.width/3.5,
+            HStack {
+                Text(barPrice)
+                Image(systemName: chevDownIcon)
+                    .opacity((dashboardv.sortingOption == .price || dashboardv.sortingOption == .priceReversed) ? 1.0 : 0.0)
+                    .rotationEffect(Angle(degrees: dashboardv.sortingOption == .price ? 0 : 180 ))
+            }
+            .frame(width: UIScreen.main.bounds.width/3.5,
                        alignment: .trailing)
+            .onTapGesture {
+                withAnimation(.default) {
+                    dashboardv.sortingOption =
+                    dashboardv.sortingOption == .price ? .priceReversed : .price
+                }
+            }
+            Button {
+                withAnimation(.linear(duration: 2.0)) {
+                    dashboardv.reloadData()
+                }
+            } label: {
+                Image(systemName: goforwardIcon)
+            }
+            .rotationEffect(Angle(degrees: dashboardv.isLoading ? 360 : 0),
+                            anchor: .center)
+            
         }
         .font(.caption)
         .foregroundColor(Color.theme.accentColor)

@@ -21,6 +21,10 @@ class DeveloperPreview {
     
     let dashboardvm = DashBoardViewModel()
     
+    let statistic1 = Statistic(title: "Market Cap", value: "$12.5Bn", percentage: 25.34)
+    let statistic2 = Statistic(title: "Total Volumne", value: "$1.23Tr")
+    let statistic3 = Statistic(title: "Portfolio Value", value: "$50.4k", percentage: -12.11)
+    
     let coin = Coin(
         id: "bitcoin",
         symbol: "btc",
