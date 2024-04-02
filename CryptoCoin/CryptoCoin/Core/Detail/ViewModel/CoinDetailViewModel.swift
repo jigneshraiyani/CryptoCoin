@@ -13,6 +13,10 @@ class CoinDetailViewModel: ObservableObject {
     @Published var overviewStatics: [Statistic] = []
     @Published var additionalStatics: [Statistic] = []
     
+    @Published var coinDescription: String? = nil
+    @Published var websiteURL: String? = nil
+    @Published var redditURL: String? = nil
+    
     private let coinDetailService: CoinDetailDataService
     private var cancellable = Set<AnyCancellable>()
     
@@ -29,6 +33,14 @@ class CoinDetailViewModel: ObservableObject {
             .sink { [weak self] (returnedArrays) in
                 self?.overviewStatics = returnedArrays.overview
                 self?.additionalStatics = returnedArrays.additional
+            }
+            .store(in: &cancellable)
+        
+        coinDetailService.$coinDetails
+            .sink { [weak self] (receivedCoinDetails) in
+                self?.coinDescription = receivedCoinDetails?.readableDescription
+                self?.websiteURL = receivedCoinDetails?.links?.homepage?.first
+                self?.redditURL = receivedCoinDetails?.links?.subredditURL
             }
             .store(in: &cancellable)
     }
