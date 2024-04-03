@@ -24,6 +24,7 @@ struct DashBoardView: View {
     @State private var showPortfolioView: Bool = false
     @State private var selectedCoin: Coin? = nil
     @State private var showDetailsView: Bool = false
+    @State private var showSettingsView: Bool = false
     @EnvironmentObject private var dashboardv : DashBoardViewModel
     
     var body: some View {
@@ -49,6 +50,9 @@ struct DashBoardView: View {
                 }
                 Spacer(minLength: 0)
             }
+            .sheet(isPresented: $showSettingsView) {
+                SettingsView()
+            }
         }
         .background(
             NavigationLink(destination: DetailLoadingView(coin: $selectedCoin),
@@ -73,12 +77,16 @@ extension DashBoardView {
         HStack {
             CircleButton(iconName: showPortfolio ? plusIcon : infoIcon)
                 .animation(.none)
+                .onTapGesture {
+                    if showPortfolio {
+                        showPortfolioView.toggle()
+                    } else {
+                        showSettingsView.toggle()
+                    }
+                }
                 .background(
                     CircleButtonAnimation(animation: $showPortfolio)
                 )
-                .onTapGesture {
-                    showPortfolioView.toggle()
-                }
             Spacer()
             Text(showPortfolio ? portfolioTitle : priceTitle)
                 .font(.headline)
