@@ -1,5 +1,5 @@
 //
-//  DetailsView.swift
+//  CoinDetailsView.swift
 //  CryptoCoin
 //
 //  Created by Raiyani Jignesh on 3/31/24.
@@ -13,15 +13,16 @@ struct DetailLoadingView: View {
     var body: some View {
         ZStack {
             if let coin = coin {
-                DetailsView(coin: coin)
+                CoinDetailsView(coin: coin)
             }
         }
     }
     
 }
 
-struct DetailsView: View {
+struct CoinDetailsView: View {
     @StateObject var vm: CoinDetailViewModel
+    @State private var showFullDescription: Bool = false
     
     private let overViewTitleText = "Overview"
     private let additionDetailsText = "Additional Details"
@@ -43,14 +44,20 @@ struct DetailsView: View {
                 VStack(spacing: 20) {
                     overViewTitle
                     Divider()
+                    descriptionView
                     overViewGrid
                     additionalTitle
                     Divider()
                     additionalGrid
+                    websiteView
                 }
                 .padding()
             }
         }
+        .background(
+            Color.theme.backgroundColor
+                .ignoresSafeArea()
+        )
         .navigationTitle(vm.coin.name)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -62,11 +69,11 @@ struct DetailsView: View {
 
 struct DetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailsView(coin: dev.coin)
+        CoinDetailsView(coin: dev.coin)
     }
 }
 
-extension DetailsView {
+extension CoinDetailsView {
     
     private var navigationBarTrailingItem: some View {
         HStack {
@@ -117,5 +124,52 @@ extension DetailsView {
                 StatisticView(statModel: stat)
             }
         }
+    }
+    
+    private var descriptionView: some View {
+        ZStack {
+            if let coinDescription = vm.coinDescription,
+               !coinDescription.isEmpty {
+                VStack(alignment: .leading) {
+                    Text(coinDescription)
+                        .lineLimit(showFullDescription ? nil : 3)
+                        .font(.callout)
+                        .foregroundColor(Color.theme.secondaryTextColor)
+                    
+                    Button {
+                        withAnimation(.easeInOut) {
+                            showFullDescription.toggle()
+                        }
+                    } label: {
+                        Text(showFullDescription ? "Less" : "Read more ..")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .padding(.vertical, 4)
+                    }
+                    .accentColor(.blue)
+                }
+                .frame(maxWidth: .infinity,
+                       alignment: .leading)
+            }
+        }
+    }
+    
+    private var websiteView: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            if let websiteString = vm.websiteURL,
+               let url = URL(string: websiteString) {
+                Link("Website",
+                     destination: url)
+            }
+            if let redditString = vm.redditURL,
+               let url = URL(string: redditString) {
+                Link("Reddit",
+                     destination: url)
+            }
+        }
+        .accentColor(.blue)
+        .frame(maxWidth: .infinity,
+               alignment: .leading)
+        .font(.headline)
     }
 }
