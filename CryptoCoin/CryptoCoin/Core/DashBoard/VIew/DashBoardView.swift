@@ -24,6 +24,7 @@ struct DashBoardView: View {
     @State private var showPortfolioView: Bool = false
     @State private var selectedCoin: Coin? = nil
     @State private var showDetailsView: Bool = false
+    @State private var showSettingsView: Bool = false
     @EnvironmentObject private var dashboardv : DashBoardViewModel
     
     var body: some View {
@@ -44,10 +45,19 @@ struct DashBoardView: View {
                     .transition(.move(edge: .leading))
                 }
                 if showPortfolio == true {
-                    portfolioCoinList
+                    ZStack(alignment: .top) {
+                        if dashboardv.portfolioCoins.isEmpty && dashboardv.searchBarText.isEmpty {
+                            portfolioEmptyText
+                        } else {
+                            portfolioCoinList
+                        }
+                    }
                     .transition(.move(edge: .trailing))
                 }
                 Spacer(minLength: 0)
+            }
+            .sheet(isPresented: $showSettingsView) {
+                SettingsView()
             }
         }
         .background(
@@ -73,12 +83,16 @@ extension DashBoardView {
         HStack {
             CircleButton(iconName: showPortfolio ? plusIcon : infoIcon)
                 .animation(.none)
+                .onTapGesture {
+                    if showPortfolio {
+                        showPortfolioView.toggle()
+                    } else {
+                        showSettingsView.toggle()
+                    }
+                }
                 .background(
                     CircleButtonAnimation(animation: $showPortfolio)
                 )
-                .onTapGesture {
-                    showPortfolioView.toggle()
-                }
             Spacer()
             Text(showPortfolio ? portfolioTitle : priceTitle)
                 .font(.headline)
@@ -109,6 +123,7 @@ extension DashBoardView {
                     .onTapGesture {
                         navigateToDetailsView(coin: coin)
                     }
+                    .listRowBackground(Color.theme.backgroundColor)
             }
         }
         .listStyle(.plain)
@@ -129,6 +144,15 @@ extension DashBoardView {
             }
         }
         .listStyle(.plain)
+    }
+    
+    private var portfolioEmptyText: some View {
+        Text("You have not added any coins to your portfolio yet. Click the + button to get started.")
+            .font(.callout)
+            .foregroundColor(Color.theme.accentColor)
+            .fontWeight(.medium)
+            .multilineTextAlignment(.center)
+            .padding(50)
     }
     
     private func navigateToDetailsView(coin: Coin) {

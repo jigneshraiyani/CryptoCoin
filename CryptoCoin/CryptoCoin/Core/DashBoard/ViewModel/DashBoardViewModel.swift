@@ -158,7 +158,7 @@ class DashBoardViewModel: ObservableObject {
         }
         .reduce(0, +)
 
-        let percentageChange = ((portfolioValue - previousValue) / previousValue) * 100
+        let percentageChange = ((portfolioValue - previousValue) / previousValue)
         
         let portfolio = Statistic(title: "Portfolio Value",
                                   value: portfolioValue.convertCurrencyWith2Decimal(),
