@@ -16,11 +16,16 @@ struct Constant {
         static let redColor = "RedColor"
         static let secondaryTextColor = "SecondaryTextColor"
     }
+    
+    struct LaunchColor {
+        static let launchAccentColor = "LaunchAccentColor"
+        static let launchBackgroundColor = "LaunchBackgroundColor"
+    }
 }
 
 extension Color {
-   static let theme = ColorTheme()
-    
+    static let theme = ColorTheme()
+    static let launch = LaunchTheme()
 }
 
 struct ColorTheme {
@@ -29,4 +34,9 @@ struct ColorTheme {
     let greenColor = Color(Constant.Color.greenColor)
     let redColor = Color(Constant.Color.redColor)
     let secondaryTextColor = Color(Constant.Color.secondaryTextColor)
+}
+
+struct LaunchTheme {
+    let accent = Color(Constant.LaunchColor.launchAccentColor)
+    let background = Color(Constant.LaunchColor.launchBackgroundColor)
 }
