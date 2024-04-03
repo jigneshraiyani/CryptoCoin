@@ -54,6 +54,10 @@ struct CoinDetailsView: View {
                 .padding()
             }
         }
+        .background(
+            Color.theme.backgroundColor
+                .ignoresSafeArea()
+        )
         .navigationTitle(vm.coin.name)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

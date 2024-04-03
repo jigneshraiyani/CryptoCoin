@@ -45,7 +45,13 @@ struct DashBoardView: View {
                     .transition(.move(edge: .leading))
                 }
                 if showPortfolio == true {
-                    portfolioCoinList
+                    ZStack(alignment: .top) {
+                        if dashboardv.portfolioCoins.isEmpty && dashboardv.searchBarText.isEmpty {
+                            portfolioEmptyText
+                        } else {
+                            portfolioCoinList
+                        }
+                    }
                     .transition(.move(edge: .trailing))
                 }
                 Spacer(minLength: 0)
@@ -117,6 +123,7 @@ extension DashBoardView {
                     .onTapGesture {
                         navigateToDetailsView(coin: coin)
                     }
+                    .listRowBackground(Color.theme.backgroundColor)
             }
         }
         .listStyle(.plain)
@@ -137,6 +144,15 @@ extension DashBoardView {
             }
         }
         .listStyle(.plain)
+    }
+    
+    private var portfolioEmptyText: some View {
+        Text("You have not added any coins to your portfolio yet. Click the + button to get started.")
+            .font(.callout)
+            .foregroundColor(Color.theme.accentColor)
+            .fontWeight(.medium)
+            .multilineTextAlignment(.center)
+            .padding(50)
     }
     
     private func navigateToDetailsView(coin: Coin) {

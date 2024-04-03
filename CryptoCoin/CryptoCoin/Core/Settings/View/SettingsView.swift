@@ -10,10 +10,17 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         NavigationView {
-            List {
-                detailsView
-                geckoView
-                developerView
+            ZStack {
+                Color.theme.backgroundColor
+                    .ignoresSafeArea()
+                List {
+                    detailsView
+                        .listRowBackground(Color.theme.backgroundColor.opacity(0.5))
+                    geckoView
+                        .listRowBackground(Color.theme.backgroundColor.opacity(0.5))
+                    developerView
+                        .listRowBackground(Color.theme.backgroundColor.opacity(0.5))
+                }
             }
             .font(.headline)
             .accentColor(.blue)

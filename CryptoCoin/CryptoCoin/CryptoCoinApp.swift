@@ -14,6 +14,9 @@ struct CryptoCoinApp: App {
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor(Color.theme.accentColor)]
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor(Color.theme.accentColor)]
+        UINavigationBar.appearance().tintColor = UIColor(Color.theme.accentColor)
+        UITableView.appearance().backgroundColor = UIColor.clear
+        
     }
     
     var body: some Scene {
@@ -22,7 +25,9 @@ struct CryptoCoinApp: App {
                 NavigationView {
                     DashBoardView()
                         .navigationBarHidden(true)
-                }.environmentObject(dashboardvm)
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+                .environmentObject(dashboardvm)
                 ZStack {
                     if showLaunchView {
                         LaunchView(showLaunchView: $showLaunchView)
